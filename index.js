@@ -1,31 +1,35 @@
-// require readline module
-const readline = require("readline");
+// import createInterface method from the readline module
+const { createInterface } = require("readline");
 
-// define correct answer generator function
-const correctNumSelector = (currLevel) => Math.floor(Math.random() * currLevel + 1);
+// define function to return an integer from 1
+const correctNumSelector = (range) => Math.floor(Math.random() * range) + 1;
 
 // DEFINE GLOBAL VARIABLES
-// username
+// username varaible
 let username;
-// current level
-let currentLevel = 0;
-// user score
+// current level varaible
+let currentLevel = 1;
+// level range varaible
+let range = currentLevel + 1;
+// user score varaible
 let score = 0;
-// review mode toggle
+// review mode toggle varaible
 let reviewMode = false;
 
-// prompt interface function
-const createInterface = () => {
-    return readline.createInterface({
+// define function to return CLI prompt interface
+const promptInterface = () => {
+    return createInterface({
         input: process.stdin,
         output: process.stdout,
     });
 };
+
+//
 const promptUsername = (next) => {
-    const rl = createInterface();
+    const rl = promptInterface();
     const questionText = `\nWelcome to "Guess the Integer".
-You'll guess an integer
-between 0(inclusive) and an interger.
+You'll be guessing an integer
+between 1 and another integer.
 
 What is your username?
 
@@ -39,11 +43,12 @@ What is your username?
 };
 
 const setReviewMode = () => {
-    const rl = createInterface();
+    const rl = promptInterface();
     const questionText = `\nReview mode reveals the anwser
 so that the reviewer can guess
 correctly or wrongly at will in order
 to review the code logic
+
 Press 1 to turn on review mode:
 Press any other key to it turn off.
 `;
@@ -59,11 +64,11 @@ Press any other key to it turn off.
 const newLevel = () => {
     // increment current level and set correct anwser
     // as a random number based on the range (0, currentlevel)
-    const correctAnswer = correctNumSelector(++currentLevel);
+    const correctAnswer = correctNumSelector(range);
 
-    const rl = createInterface();
+    const rl = promptInterface();
     const questionText = `\nLevel ${currentLevel}.
-Guess an Integer between 0 and ${currentLevel}:
+Guess an Integer between 1 and ${range}:
 ${reviewMode ? `Review Mode: correct answer is ${correctAnswer}` : ""}
 `;
     rl.question(questionText, (answer) => {
@@ -76,6 +81,8 @@ and the correct answer is ${correctAnswer}
             console.log(correctResponse);
             rl.close();
             score++;
+            currentLevel++;
+            range++;
             newLevel();
         } else {
             const failureResponse = `\nWRONG!!!
