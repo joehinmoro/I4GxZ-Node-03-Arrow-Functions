@@ -57,8 +57,8 @@ so that the reviewer can guess
 correctly or wrongly at will in order
 to review the code logic
 
-Press 1 to turn on review mode:
-Press any other key to it turn off.
+Reply with 1 to turn on review mode:
+Reply with any other key to keep it turned off.
 `;
     // prompt to enable review mode
     rl.question(questionText, (anwser) => {
