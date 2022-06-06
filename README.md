@@ -17,7 +17,3 @@ Thank you...
 This is a CLI/console based integer guessing game
 
 A review mode feature was added to the program to help the reviewer/grader guess correctly or wrongly at will.
-
-index.js: task implemented with the proper Node [readline module]
-
-alternative.js: task implemented with vanilla JavaScript [prompt() & while loop]
