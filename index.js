@@ -2,17 +2,19 @@
 const { createInterface } = require("readline");
 
 // define function to return an integer from 1
-const correctNumSelector = (range) => Math.floor(Math.random() * range) + 1;
+const correctAnswerSelector = (range) => Math.floor(Math.random() * range) + 1;
 
 // DEFINE GLOBAL VARIABLES
-// username varaible
-let username;
+// user score varaible
+let score = 0;
 // current level varaible
 let currentLevel = 1;
 // level range varaible
-let range = currentLevel + 1;
-// user score varaible
-let score = 0;
+let range = 2;
+// username varaible
+let username;
+// game status variable
+let isAlive = true;
 // review mode toggle varaible
 let reviewMode = false;
 
@@ -25,11 +27,13 @@ const promptInterface = () => {
 };
 
 // function to start game and prompt username
-const startGame = () => {
+const setUsername = () => {
     // create prompt interface
     const rl = promptInterface();
     // prompt text
-    const questionText = `\nWelcome to "Guess the Integer".
+    const questionText = `
+***********************************************
+Welcome to "Guess the Integer".
 You'll be guessing an integer
 between 1 and another integer.
 
@@ -37,11 +41,11 @@ What is your username?
 
 `;
     // prompt for username
-    rl.question(questionText, (anwser) => {
+    rl.question(questionText, (userAnwser) => {
         // close prompt interface
         rl.close();
         // set username global var to prompt response
-        username = anwser;
+        username = userAnwser;
         // call the (optional) review mode function
         setReviewMode();
     });
@@ -52,7 +56,9 @@ const setReviewMode = () => {
     // create prompt interface
     const rl = promptInterface();
     // prompt text
-    const questionText = `\nReview mode reveals the anwser
+    const questionText = `
+***********************************************
+Review mode reveals the anwser
 so that the reviewer can guess
 correctly or wrongly at will in order
 to review the code logic
@@ -68,55 +74,62 @@ Reply with any other key to keep it turned off.
         if (anwser == 1) {
             reviewMode = true;
         }
-
         // call game level function
-        newLevel();
+        gameLevel();
     });
 };
 
 // define game level function
-const newLevel = () => {
+const gameLevel = () => {
     // set correct answer global var randomly betweeen 1 and range
-    const correctAnswer = correctNumSelector(range);
+    const correctAnswer = correctAnswerSelector(range);
     // create prompt interface
     const rl = promptInterface();
     // prompt text
-    const questionText = `\nLevel ${currentLevel}.
+    const questionText = `
+***********************************************
+Level ${currentLevel}.
 Guess an Integer between 1 and ${range}:
 ${reviewMode ? `Review Mode: correct answer is ${correctAnswer}` : ""}
 `;
     // prompt for user's answer
-    rl.question(questionText, (answer) => {
+    rl.question(questionText, (userAnswer) => {
         // close prompt interface
         rl.close();
         // parse user's answer to integer
-        answer = parseInt(answer);
+        userAnswer = parseInt(userAnswer);
 
         // if user's answer is correct:
-        if (answer === correctAnswer) {
+        if (userAnswer === correctAnswer) {
+            // increment score variable (global) for next level
+            score++;
+            // increment level variable (global) for next level
+            currentLevel++;
+            // increment range variable (global) for next level
+            range++;
             // define correct answer message
-            const correctMessage = `\nCORRECT!!!
-You guessed ${answer}
-and the correct answer is ${correctAnswer}
-`;
+            const correctMessage = `
+CORRECT!!!
+You guessed ${userAnswer}
+and the correct answer is ${correctAnswer}.
+Your score is ${score}.`;
             // print correct answer message
             console.log(correctMessage);
-            // increment score var (global)
-            score++;
-            // increment level var (global)
-            currentLevel++;
-            // increment range var (global)
-            range++;
-            // call game level function again for next level
-            newLevel();
+            // call game level function  for next level
+            gameLevel();
         }
         // if user's answer is wrong:
         else {
+            // set game status to false to end game loop
+            isAlive = false;
             // define wrong answer message
-            const failureResponse = `\nWRONG!!!
-You guessed ${answer}
+            const failureResponse = `
+WRONG!!!
+You guessed ${userAnswer}
 and the correct answer is ${correctAnswer}.
-\n${username}, you scored ${score}.
+
+***********************************************
+${username}, you scored ${score}.
 TRY AGAIN!!!
 `;
             // print wrong answer message
@@ -125,5 +138,5 @@ TRY AGAIN!!!
     });
 };
 
-// start game
-startGame();
+// GAMEPLAY
+setUsername();
