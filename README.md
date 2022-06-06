@@ -1,8 +1,6 @@
 # I4GxZ-Node-03-Arrow-Functions
 
-# !!! Good Day Sir/Ma, I submitted the replit link instead of the github link.
-
-# The github link is attached below... Thanks
+# !!! Good Day Sir/Ma, I submitted the replit link instead of the github link.The github link is attached below... Thanks
 
 GitHub Link for this task:
 
@@ -18,4 +16,8 @@ Thank you...
 
 This is a CLI/console based integer guessing game
 
-Turn on review mode to expose answers
+A review mode feature was added to the program to help the reviewer/grader guess correctly or wrongly at will.
+
+index.js: task implemented with the proper Node [readline module]
+
+alternative.js: task implemented with vanilla JavaScript [prompt() & while loop]
