@@ -14,6 +14,10 @@ Thank you...
 
 #
 
-This is a CLI/console based integer guessing game
+This is an integer guessing game.
 
 A review mode feature was added to the program to help the reviewer/grader guess correctly or wrongly at will.
+
+index.js: Task implemented with Node JS
+
+alternative.js: Task implemented with Vanilla JavaScript
