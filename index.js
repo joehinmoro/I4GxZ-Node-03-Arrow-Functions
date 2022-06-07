@@ -1,7 +1,7 @@
 // import createInterface method from the readline module
 const { createInterface } = require("readline");
 
-// define function to return an integer from 1
+// define function to return an integer from 1 to range argument
 const correctAnswerSelector = (range) => Math.floor(Math.random() * range) + 1;
 
 // DEFINE GLOBAL VARIABLES
@@ -81,7 +81,7 @@ Reply with any other key to keep it turned off.
 
 // define game level function
 const gameLevel = () => {
-    // set correct answer global var randomly betweeen 1 and range
+    // set correct answer variable randomly betweeen 1 and range
     const correctAnswer = correctAnswerSelector(range);
     // create prompt interface
     const rl = promptInterface();
